@@ -56,16 +56,32 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             tema_actual = usuarios[user_id]["tema"]
             
-            texto = ["imagen", "muéstrame imagenes", "muéstrame una imagen", "mostrar imagenes"]
+            texto = ["imagen", "muéstrame imagenes", "muéstrame una imagen", "mostrar imagenes", "ver imagenes", "ver una imagen"]
             # Verificar si el mensaje es una solicitud de imágenes
             if any(palabra in message_text for palabra in texto):
                 dialogflow_response = get_dialogflow_response(message_text)
-                for msg in dialogflow_response:
-                    if msg["type"] == "combined":
-                        await update.message.reply_photo(photo=msg["photo"], caption=msg["text"], reply_markup=InlineKeyboardMarkup([msg["buttons"]]))
-                    else:
-                        await update.message.reply_text(msg["text"])
-                return  # Terminar el manejo de este mensaje aquí
+                
+                # Filtrar las imágenes según el tema seleccionado
+                mensajes_filtrados = [
+                    msg for msg in dialogflow_response 
+                    if msg.get("title", "").lower() == tema_actual
+                ]
+
+                if mensajes_filtrados:
+                    for msg in mensajes_filtrados:
+                        if msg["type"] == "combined":
+                            await update.message.reply_photo(
+                                photo=msg["photo"],
+                                caption=msg["text"],
+                                reply_markup=InlineKeyboardMarkup([msg["buttons"]])
+                            )
+                        else:
+                            await update.message.reply_text(msg["text"])
+                else:
+                    await update.message.reply_text(
+                        f"No se encontraron imágenes para el tema {tema_actual}."
+                    )
+                return  # Terminar el manejo aquí
             
             if mensaje_relacionado_con_temas(message_text, tema_actual):
                 handle_user_message(user_id, message_text)
