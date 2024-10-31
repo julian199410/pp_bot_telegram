@@ -225,14 +225,13 @@ def get_dialogflow_response(message_text):
                 ]
 
                 # Construir el mensaje combinado
-                messages.append(
-                    {
-                        "type": "combined",
-                        "photo": image_url,
-                        "text": title,
-                        "buttons": button_list,
-                    }
-                )
+                messages.append({
+                    "type": "combined",
+                    "photo": image_url,
+                    "text": title,
+                    "buttons": button_list,
+                    "title": title.lower(),  # Agregamos el título para filtrar por tema
+                })
 
     return messages
 
