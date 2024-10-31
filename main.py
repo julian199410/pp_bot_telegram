@@ -198,6 +198,20 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
+    # Cargar el contenido del archivo de credenciales desde la variable de entorno
+    credentials_content = os.getenv("GOOGLE_CREDENTIALS_JSON")
+    if credentials_content:
+        # Crear la ruta temporal para el archivo de credenciales
+        credentials_path = "/tmp/credentials.json"
+        with open(credentials_path, "w") as file:
+            file.write(credentials_content)
+        
+        # Establecer la variable de entorno GOOGLE_APPLICATION_CREDENTIALS
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+    else:
+        logger.error("Error: No se encontró el contenido de GOOGLE_CREDENTIALS_JSON")
+        return
+    
     # Cargar el token de la API de Telegram
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
     if not TELEGRAM_TOKEN:
