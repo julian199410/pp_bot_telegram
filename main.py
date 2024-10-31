@@ -198,19 +198,6 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-    credentials_path = "conf/credentials.json"
-    credentials_content = os.getenv("GOOGLE_CREDENTIALS_CONTENT")
-
-    # Asegúrate de que el directorio `conf` existe
-    os.makedirs("conf", exist_ok=True)
-
-    # Escribe el contenido en el archivo `credentials.json`
-    with open(credentials_path, "w") as file:
-        file.write(credentials_content)
-
-    # Establece la variable de entorno para que Google la encuentre
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
-    
     # Cargar el token de la API de Telegram
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
     if not TELEGRAM_TOKEN:
