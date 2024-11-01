@@ -1,0 +1,7 @@
+services:
+  - type: web  # Mantener como web para el plan gratuito
+    name: telegram-bot
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
