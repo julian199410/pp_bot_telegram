@@ -55,15 +55,56 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
         else:
             tema_actual = usuarios[user_id]["tema"]
-            
-            texto = ["imagen", "muéstrame imagenes", "muéstrame una imagen", "mostrar imagenes", "ver imagenes", "ver una imagen"]
+
+            texto = [
+                "imagen",
+                "muéstrame imagenes",
+                "muéstrame una imagen",
+                "mostrar imagenes",
+                "ver imagenes",
+                "ver una imagen",
+                "imagen",
+                "foto",
+                "ejemplo",
+                "visual",
+                "muestra",
+                "piojos",
+                "infografía",
+                "muéstrame una imagen de pediculosis",
+                "¿tienes fotos de piojos?",
+                "dame un ejemplo visual de pediculosis",
+                "quiero ver una infografía sobre pediculosis",
+                "¿puedes mostrarme cómo se ven los piojos?",
+                "¿tienes imágenes de los síntomas de pediculosis?",
+                "muéstrame fotos de tratamientos para pediculosis",
+                "¿qué aspecto tiene la pediculosis?",
+                "quiero ver una imagen de cómo prevenir la pediculosis"
+                # Imagenes parasitismo
+                "imagen",
+                "foto",
+                "ejemplo",
+                "visual",
+                "muestra",
+                "parásitos",
+                "infografía",
+                "muéstrame una imagen de parasitismo",
+                "¿tienes fotos de parásitos?",
+                "dame un ejemplo visual de parasitismo",
+                "quiero ver una infografía sobre parasitismo",
+                "¿puedes mostrarme cómo se ven los parásitos?",
+                "¿tienes imágenes de los síntomas de parasitismo?",
+                "muéstrame fotos de tratamientos para parasitismo",
+                "¿qué aspecto tienen los parásitos?",
+                "quiero ver una imagen de cómo prevenir el parasitismo"
+            ]
             # Verificar si el mensaje es una solicitud de imágenes
             if any(palabra in message_text for palabra in texto):
                 dialogflow_response = get_dialogflow_response(message_text)
-                
+
                 # Filtrar las imágenes según el tema seleccionado
                 mensajes_filtrados = [
-                    msg for msg in dialogflow_response 
+                    msg
+                    for msg in dialogflow_response
                     if msg.get("title", "").lower() == tema_actual
                 ]
 
@@ -73,7 +114,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                             await update.message.reply_photo(
                                 photo=msg["photo"],
                                 caption=msg["text"],
-                                reply_markup=InlineKeyboardMarkup([msg["buttons"]])
+                                reply_markup=InlineKeyboardMarkup([msg["buttons"]]),
                             )
                         else:
                             await update.message.reply_text(msg["text"])
@@ -82,7 +123,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                         f"No se encontraron imágenes para el tema {tema_actual}."
                     )
                 return  # Terminar el manejo aquí
-            
+
             if mensaje_relacionado_con_temas(message_text, tema_actual):
                 handle_user_message(user_id, message_text)
                 response = generate_response(user_id)
