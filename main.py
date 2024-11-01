@@ -255,8 +255,7 @@ def main():
 
     # Ejecutar el bot
     logger.info("Iniciando el bot...")
-    # bot.run_polling(allowed_updates=Update.ALL_TYPES)
-    bot.run_polling(port=int(os.getenv("PORT", 5000)), allowed_updates=Update.ALL_TYPES)  # 8443 es un puerto por defecto
+    bot.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == "__main__":
