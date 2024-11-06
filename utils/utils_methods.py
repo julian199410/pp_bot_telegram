@@ -118,6 +118,8 @@ palabras_clave = {
         "vulnerables",
         "susceptibles",
         "afectados",
+        "¿que es?",
+        "que es",
         "¿a quién afecta más la pediculosis?",
         "¿quiénes son más propensos a la pediculosis?",
         "¿qué grupo es más afectado por la pediculosis?",
